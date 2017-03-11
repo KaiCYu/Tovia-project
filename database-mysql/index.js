@@ -7,18 +7,21 @@ var connection = mysql.createConnection({
   database : 'games'
 });
 
-var selectAll = function(callback) {
-  var queryStr = `SELECT * FROM collection`
-  connection.query(queryStr, function(err, results, fields) {
+var selectRandomGame = function(callback) {
+  var queryStr = `SELECT * FROM collection ORDER BY RAND() LIMIT 1`
+  connection.query(queryStr, function(err, results) {
     if(err) {
       console.log('ERROR GETTING FROM DATABASE', err);
-      callback(err, null);
+      // callback(err, null);
     } else {
-      console.log('RESULTS', results);
+      console.log('inside db', results);
+      // callback(null, results);
       callback(null, results);
     }
   });
 };
+
+
 // DROP TABLE IF EXISTS collection\
 // CREATE TABLE IF NOT EXISTS collection\
 
@@ -41,5 +44,5 @@ var storeToDB = function (data, callback) {
   })
 };
 
-module.exports.selectAll = selectAll;
+module.exports.selectRandomGame = selectRandomGame;
 module.exports.storeToDB = storeToDB;
