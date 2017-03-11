@@ -1,34 +1,39 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-import List from './components/List.jsx';
+import Search from './components/Search.jsx';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { 
-      items: []
+    this.state = {
+      // items: []w
     }
   }
 
-  componentDidMount() {
+  search(user) {
+    console.log(`${user} was searched`);
+
     $.ajax({
-      url: '/items', 
-      success: (data) => {
-        this.setState({
-          items: data
-        })
+      type: 'POST',
+      url: '/collection',
+      dataType: 'xml',
+      data: `hi from search data`,
+      // dataType: 'application/json',
+      success: function (data) {
+        console.log('success!');
       },
-      error: (err) => {
-        console.log('err', err);
+      error: function (err) {
+        console.log('error! ', err);
       }
-    });
+    })
+
   }
 
   render () {
     return (<div>
-      <h1>Item List</h1>
-      <List items={this.state.items}/>
+      <h1>BOARD GAME PICKER</h1>
+      <Search onSearch={this.search.bind(this)} />
     </div>)
   }
 }

@@ -4,14 +4,16 @@ var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
   password : '',
-  database : 'test'
+  database : 'game_collection'
 });
 
 var selectAll = function(callback) {
-  connection.query('SELECT * FROM items', function(err, results, fields) {
+  connection.query('SELECT * FROM collection', function(err, results, fields) {
     if(err) {
+      console.log('ERROR DATABASE', err);
       callback(err, null);
     } else {
+      console.log('RESULTS', results);
       callback(null, results);
     }
   });

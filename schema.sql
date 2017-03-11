@@ -1,13 +1,13 @@
-DROP DATABASE IF EXISTS test;
+DROP DATABASE IF EXISTS game_collection;
 
-CREATE DATABASE test;
+CREATE DATABASE game_collection;
 
-USE test;
+USE game_collection;
 
-CREATE TABLE items (
-  id int NOT NULL AUTO_INCREMENT,
-  quantity integer NOT NULL,
-  description varchar(50) NOT NULL,
+CREATE TABLE collection (
+  id int NOT NULL,
+  game_name varchar(255) NOT NULL,
+  max_players varchar(50) NOT NULL,
   PRIMARY KEY (ID)
 );
 
