@@ -1,16 +1,14 @@
-DROP DATABASE IF EXISTS game_collection;
+DROP DATABASE IF EXISTS games;
+CREATE DATABASE games;
+USE games;
 
-CREATE DATABASE game_collection;
-
-USE game_collection;
+-- DROP TABLE IF EXISTS collection;
 
 CREATE TABLE collection (
-  id int NOT NULL,
-  game_name varchar(255) NOT NULL,
-  max_players varchar(50) NOT NULL,
-  PRIMARY KEY (ID)
+  id INT NOT NULL,
+  game_name VARCHAR(255) NOT NULL,
+  PRIMARY KEY (id, game_name)
 );
-
 /*  Execute this file from the command line by typing:
  *    mysql -u root < server/schema.sql
  *  to create the database and the tables.*/

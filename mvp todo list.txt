@@ -4,9 +4,9 @@ TODO
 [X] research BGG api
 [X] write/visualize database
 
-[] send ajax GET request from server to BGG api for the user collection
-[] store user collection into mysql DB
-[] on completion of storing data, query for the user collection in DB
+[X] send ajax GET request from server to BGG api for the user collection
+[X] store user collection into mysql DB
+[X] on completion of storing data, query for the user collection in DB
 [] inside S, randomize game from the col
 [] send back name of randomized game to C
 [] add name of game to the state of C
