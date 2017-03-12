@@ -10,12 +10,15 @@ var dB = require('../database-mysql/index');
 var app = express();
 
 app.use(express.static(__dirname + '/../react-client/dist'));
-app.use(bodyParser.json());
-
+app.use(bodyParser.urlencoded({extended: true}));
 //listen for POST request from C. "listening" at /collection
 app.post('/collection', function (req, res) {
+  // console.log(req.body);
+  var username = Object.keys(req.body)[0];
+  console.log('searched username', username);
+  var game;
   var options = {
-    url: `http://www.boardgamegeek.com/xmlapi/collection/BoBaTheBear`,
+    url: `http://www.boardgamegeek.com/xmlapi/collection/${username}`,
     headers: {
       'Content-Type': 'text/xml'
     }
@@ -26,23 +29,29 @@ app.post('/collection', function (req, res) {
     //massage data
     parseString(result1.body, function (err2, result2) {
       if (err2) { console.log('ERROR PARSING XML', err2);}
+      // console.log('result object from API', result2);
       var gameList = result2.items.item;
       //store into DB
       dB.storeToDB(gameList, function (err3, result3) {
         if (err3) { console.log('ERROR STORING INTO DB', err3);}
-        //query DB for whole collection
+        //query DB for a random game
         dB.selectRandomGame(function (err4, result4) {
           if (err4) { console.log('ERROR RETRIEVING FROM DB', err4);}
-          console.log('RESULTS FROM DB QUERY: ',  result4 instanceof Array);
-          console.log('RESULTS FROM DB QUERY: ',  result4);
-          // var randomGame = result4
-        })
+          // console.log('RESULTS FROM DB QUERY: ',  result4);
+          // console.log('RES.JSON ROW ', res.json(row));
+          var randomGame = result4[0].game_name;
+          // game = randomGame;
+          // res.status(200).send(randomGame);
+          console.log('random game', randomGame);
+          // console.log('erorr in server', err4);
+          res.status(302).send(randomGame);
+        });
       });
-
-      // res.send(gameList);
     });
-  })
-  res.send(`randomized game name`);
+  });
+  // res.send(`randomized game name`);
+  // console.log('GAME: ', game);
+  // res.send();
 });
 
 

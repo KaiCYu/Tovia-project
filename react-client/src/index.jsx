@@ -7,27 +7,32 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // items: []w
+      // items: []
+      game: ''
     }
   }
 
   search(user) {
     console.log(`${user} was searched`);
-
     $.ajax({
       type: 'POST',
       url: '/collection',
-      dataType: 'xml',
-      data: `hi from search data`,
+      // dataType: 'xml',
       // dataType: 'application/json',
+      data: `${user}`,
       success: function (data) {
         console.log('success!');
+        console.log('data in react: ', data);
+        // console.log('game state in react', this.state.game);
       },
       error: function (err) {
-        console.log('error! ', err);
+        console.log('error in react! ', err);
+        console.log('RANDOMIZED GAME:', err.responseText);
       }
     })
-
+    // $.post('http://localhost:4321/collection', {data: `${user}`}, function (data) {
+    //   console.log('success!', data);
+    // })
   }
 
   render () {
