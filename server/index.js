@@ -29,7 +29,7 @@ app.post('/collection', function (req, res) {
     //massage data
     parseString(result1.body, function (err2, result2) {
       if (err2) { console.log('ERROR PARSING XML', err2);}
-      // console.log('result object from API', result2);
+      console.log('result object from API', result2);
       var gameList = result2.items.item;
       //store into DB
       dB.storeToDB(gameList, function (err3, result3) {
@@ -49,9 +49,6 @@ app.post('/collection', function (req, res) {
       });
     });
   });
-  // res.send(`randomized game name`);
-  // console.log('GAME: ', game);
-  // res.send();
 });
 
 

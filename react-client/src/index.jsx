@@ -26,9 +26,11 @@ class App extends React.Component {
         // console.log('game state in react', this.state.game);
       },
       error: function (err) {
-        console.log('error in react! ', err);
+        // console.log('error in react! ', err);
         console.log('RANDOMIZED GAME:', err.responseText);
-      }
+        // this.setState({game: `${err.responseText}`})
+        this.setState({game: err.responseText})
+      }.bind(this)
     })
     // $.post('http://localhost:4321/collection', {data: `${user}`}, function (data) {
     //   console.log('success!', data);
@@ -39,6 +41,7 @@ class App extends React.Component {
     return (<div>
       <h1>BOARD GAME PICKER</h1>
       <Search onSearch={this.search.bind(this)} />
+    <h3>{this.state.game}</h3>
     </div>)
   }
 }
