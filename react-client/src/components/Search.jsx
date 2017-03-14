@@ -3,7 +3,6 @@ import React from 'react';
 class Search extends React.Component {
   constructor(props) {
     super(props);
-    console.log('PROPS IN SEARCH', props);
     this.state = {
       query: ''
     }

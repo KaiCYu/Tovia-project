@@ -8,9 +8,9 @@ TODO
 [X] store user collection into mysql DB
 [X] on completion of storing data, query for the user collection in DB
 [X] inside S, randomize game from the col
-[] send back name of randomized game to C
-[] add name of game to the state of C
-[] link up C click to S GET request
+[X] send back name of randomized game to C
+[X] add name of game to the state of C
+[X] link up C click to S GET request
 []
 []
 []

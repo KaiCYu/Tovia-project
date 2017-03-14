@@ -11,9 +11,9 @@ var app = express();
 
 app.use(express.static(__dirname + '/../react-client/dist'));
 app.use(bodyParser.urlencoded({extended: true}));
+
 //listen for POST request from C. "listening" at /collection
 app.post('/collection', function (req, res) {
-  // console.log(req.body);
   var username = Object.keys(req.body)[0];
   console.log('searched username', username);
   var game;
@@ -23,13 +23,14 @@ app.post('/collection', function (req, res) {
       'Content-Type': 'text/xml'
     }
   };
+
   //send GET to API
   request(options, function (err1, result1) {
     if (err1) { console.log('ERROR SENDING GET', err1); }
     //massage data
     parseString(result1.body, function (err2, result2) {
       if (err2) { console.log('ERROR PARSING XML', err2);}
-      console.log('result object from API', result2);
+      // console.log('result object from API', result2);
       var gameList = result2.items.item;
       //store into DB
       dB.storeToDB(gameList, function (err3, result3) {
@@ -37,13 +38,8 @@ app.post('/collection', function (req, res) {
         //query DB for a random game
         dB.selectRandomGame(function (err4, result4) {
           if (err4) { console.log('ERROR RETRIEVING FROM DB', err4);}
-          // console.log('RESULTS FROM DB QUERY: ',  result4);
-          // console.log('RES.JSON ROW ', res.json(row));
           var randomGame = result4[0].game_name;
-          // game = randomGame;
-          // res.status(200).send(randomGame);
           console.log('random game', randomGame);
-          // console.log('erorr in server', err4);
           res.status(302).send(randomGame);
         });
       });
