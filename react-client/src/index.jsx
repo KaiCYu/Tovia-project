@@ -13,7 +13,7 @@ class App extends React.Component {
   }
 
   search(user) {
-    console.log(`${user} was searched`);
+    // console.log(`${user} was searched`);
     $.ajax({
       type: 'POST',
       url: '/collection',
@@ -38,10 +38,11 @@ class App extends React.Component {
   }
 
   render () {
-    return (<div>
+    return (
+    <div>
       <h1>BOARD GAME PICKER</h1>
       <Search onSearch={this.search.bind(this)} />
-    <h3>{this.state.game}</h3>
+      <h3>{this.state.game}</h3>
     </div>)
   }
 }

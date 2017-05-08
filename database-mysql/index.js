@@ -12,13 +12,9 @@ var selectRandomGame = function(callback) {
   var queryStr = `SELECT * FROM collection ORDER BY RAND() LIMIT 1`
   connection.query(queryStr, function(err, rows, results) {
     if(err) {
-      // console.log('ERROR GETTING FROM DATABASE', err);
+      console.log('ERROR GETTING FROM DATABASE', err);
       callback(err, null);
     } else {
-
-      // console.log('ROWS: ', rows);
-      // console.log('ROWS: ', JSON.parse(rows));
-      // console.log('RESULTS: ', results);
       callback(null, rows);
     }
   });
