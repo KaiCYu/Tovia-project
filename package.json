@@ -1,5 +1,5 @@
 {
-  "name": "github-fetcher-fullstack-v2",
+  "name": "tovia-enigma-kai-yu",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,8 +8,8 @@
     "react-dev": "webpack -d --watch",
     "server-dev": "nodemon server/index.js"
   },
-  "author": "Beth Johnson",
-  "license": "ISC",
+  "author": "Kai Yu",
+  "license": "MIT",
   "devDependencies": {
     "babel-core": "^6.23.1",
     "babel-loader": "^6.3.2",
@@ -21,7 +21,6 @@
     "body-parser": "^1.17.0",
     "express": "^4.15.0",
     "jquery": "^3.1.1",
-    "mysql": "^2.13.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2"
   }

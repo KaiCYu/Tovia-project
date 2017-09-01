@@ -1,13 +1,36 @@
-# MVP Scaffold
+Tovia’s Enigma, is a web application that lets users create an encrypted message given a random
+passphrase (they can always generate a new passphrase to keep their privacy) that they have to share
+between each other.
 
-OPTIONAL: Use the provided scaffold to start your MVP project. It has everything you need to get started with an Angular or React client, a node express server, and a MySQL or Mongo database. If you choose to use this scaffold, please spend some time familiarizing yourself with how the pieces are connected after following the set up directions below. 
+It gives them the ability to create private text, that only other users that have their passphrase and the
+encrypted message can read and create.
 
-**Important note:** Take the time to understand all of the code that is given to you before you write *any* code yourself.
+Another feature of this application is to set expiration times for a message. As another layer of security,
+the user that created the message, can set an expiration time that will not allow anyone to decrypt an
+expired message.
 
-### Front End Set Up - React
+If the user enters a message that is undecryptable, the application should return a message stating that
+the message has either expired or is an invalid encrypted message.
 
-To transpile your files, you'll use webpack, which you'll need to have globally installed. 
+* De/Encryption should happen on the server side (minimal API), without using database.
+The following animated GIF can give you an idea of how the app should function:
+https://media.giphy.com/media/l0Iye9w3CFoz5rP2w/source.gif
+Keep in mind, that passphrase(s) should be passed by url hash, something like:
+http://localhost:3000/#uAkk2
 
-### General Set Up
+In order to create the app that is similar to Tovia’s Enigma app, you need to use:
+● NodeJS
+● React.js
+● React Toolbox
 
-Remove unneeded folders from the repo and unneeded dependancies from package.json. Examine the `package.json` for helpful scripts. 
+Feel free to use any other libraries that can assist you achieve this challenge.
+At a minimum your code has to be written in JS - ES6.
+It should be linted as well (preferably linted to Airbnb's eslint config) and as readable as you can.
+
+Bonus points:
+● Input Validations
+● Create your api of de/encryption using GraphQL
+● Create a test suite for your application
+● Create your app by using Webpack (preferably v2)
+● Create a production build script
+● Use the latest JS features assisting with Babel
