@@ -21,8 +21,8 @@ class App extends React.Component {
     }
 
     this.actions = [
-      { label: "Close", onClick: this.handleToggle },
-      { label: "Decrypt", onClick: this.handleToggle }
+      { label: "Close", onClick: this.handleToggle.bind(this) },
+      { label: "Decrypt", onClick: this.handleToggle.bind(this) }
     ];
 
     this.handleChange = this.handleChange.bind(this);
@@ -108,7 +108,6 @@ class App extends React.Component {
         title='Encrypt/Decrypt'
       >
         <Input type='text' multiline label='Message' maxLength={200} value={this.state.encoded} />
-
       </Dialog>
 
     </div>)
