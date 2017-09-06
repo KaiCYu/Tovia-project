@@ -70,7 +70,7 @@ class App extends React.Component {
 
         <DatePicker
           label='Expiration date'
-          minDate={new Date()}
+          minDate={new Date(2017, 8, 15)}
           onChange={this.handleChange.bind(this, 'expireDate')}
           value={this.state.expireDate}
           sundayFirstDayOfWeek
