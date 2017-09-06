@@ -13,11 +13,28 @@ module.exports = {
       {
         test : /\.jsx?/,
         include : SRC_DIR,
-        loader : 'babel-loader',      
+        loader : 'babel-loader',
         query: {
           presets: ['react', 'es2015']
        }
-      }
-    ]
+      },
+      {
+        test: /\.css$/,
+        use: [
+          "style-loader",
+          {
+            loader: "css-loader",
+            options: {
+              modules: true,
+              sourceMap: true,
+              importLoaders: 1,
+              localIdentName: "[name]--[local]--[hash:base64:8]"
+            }
+          },
+          "postcss-loader" // has separate config, see postcss.config.js nearby
+        ]
+      },
+    ],
+
   }
 };
