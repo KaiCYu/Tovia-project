@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import { Button} from '../../node_modules/react-toolbox/lib/button';
 import { Input } from '../../node_modules/react-toolbox/lib/input';
 import { DatePicker } from 'react-toolbox/lib/date_picker';
+import { Dialog } from 'react-toolbox/lib/dialog';
+// import EncryptPopup from 'components/EncryptPopup';
 
 import $ from 'jquery';
 
@@ -14,8 +16,17 @@ class App extends React.Component {
       message: '',
       expireDate: '',
       passphrase: '',
+      encoded: '',
+      active: false,
     }
+
+    this.actions = [
+      { label: "Close", onClick: this.handleToggle },
+      { label: "Decrypt", onClick: this.handleToggle }
+    ];
+
     this.handleChange = this.handleChange.bind(this);
+    this.handleToggle = this.handleToggle.bind(this);
     this.setNewPhrase = this.setNewPhrase.bind(this);
     this.encrypt = this.encrypt.bind(this);
   }
@@ -28,6 +39,10 @@ class App extends React.Component {
     // console.log('name', name, 'value', value);
     this.setState({ [name]: value });
   };
+
+  handleToggle(){
+    this.setState({active: !this.state.active});
+  }
 
   setNewPhrase(length, chars) {
     var mask = '';
@@ -52,6 +67,9 @@ class App extends React.Component {
       },
       success: (data) => {
         console.log('success! data: ', data);
+        this.setState({encoded: data});
+        this.handleToggle();
+        // <EncryptPopup>
       },
       error: (err) => {
         console.log('ERRORED:', err);
@@ -81,6 +99,17 @@ class App extends React.Component {
       
       <p>Your PassPhrase: {this.state.passphrase} </p>
       <Button label='Generate a new PassPhrase' onClick={this.setNewPhrase.bind(this, 5, 'aA#')}/>
+
+      <Dialog
+        actions={this.actions}
+        active={this.state.active}
+        onEscKeyDown={this.handleToggle}
+        onOverlayClick={this.handleToggle}
+        title='Encrypt/Decrypt'
+      >
+        <Input type='text' multiline label='Message' maxLength={200} value={this.state.encoded} />
+
+      </Dialog>
 
     </div>)
   }
