@@ -10,3 +10,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.listen(4321, function() {
   console.log('listening on port 4321!');
 });
+
+
+app.post('/encrypt', (req, res) => {
+  console.log('IN ENCRYPT');
+  console.log('req.body', req.body);
+});

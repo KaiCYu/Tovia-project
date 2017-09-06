@@ -13,14 +13,51 @@ class App extends React.Component {
       name: '',
       message: '',
       expireDate: '',
+      passphrase: '',
     }
     this.handleChange = this.handleChange.bind(this);
+    this.setNewPhrase = this.setNewPhrase.bind(this);
+    this.encrypt = this.encrypt.bind(this);
+  }
+
+  componentDidMount() {
+    this.setNewPhrase(5, 'aA#');
   }
 
   handleChange(name, value){
     // console.log('name', name, 'value', value);
     this.setState({ [name]: value });
   };
+
+  setNewPhrase(length, chars) {
+    var mask = '';
+    if (chars.indexOf('a') > -1) mask += 'abcdefghijklmnopqrstuvwxyz';
+    if (chars.indexOf('A') > -1) mask += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    if (chars.indexOf('#') > -1) mask += '0123456789';
+    var result = '';
+    for (var i = length; i > 0; --i) result += mask[Math.floor(Math.random() * mask.length)];
+    this.setState({passphrase: result});
+  }
+
+  encrypt(event) {
+    event.preventDefault();
+    $.ajax({
+      url: '/encrypt',
+      type: 'POST',
+      data: {
+        name: this.state.name,
+        message: this.state.message,
+        expireDate: this.state.expireDate,
+        passphrase: this.state.passphrase,
+      },
+      success: (data) => {
+        console.log('success! data: ', data);
+      },
+      error: (err) => {
+        console.log('ERRORED:', err);
+      }
+    })
+  }
 
   render () {
     return (
@@ -38,8 +75,12 @@ class App extends React.Component {
           value={this.state.expireDate}
           sundayFirstDayOfWeek
         />
-        <Button label='Hello World!' />,
+        <Button label='Encrypt!' onClick={this.encrypt}/>
+        <Button label='Decrypt!'/>
       </section>
+      
+      <p>Your PassPhrase: {this.state.passphrase} </p>
+      <Button label='Generate a new PassPhrase' onClick={this.setNewPhrase.bind(this, 5, 'aA#')}/>
 
     </div>)
   }

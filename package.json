@@ -38,8 +38,9 @@
     "express": "^4.15.0",
     "jquery": "^3.1.1",
     "react": "^15.4.2",
+    "react-addons-css-transition-group": "^15.4.2",
     "react-dom": "^15.4.2",
-    "react-toolbox": "^2.0.0-beta.12",
-    "react-addons-css-transition-group": "^15.4.2"
+    "react-hot-loader": "^3.0.0-beta.7",
+    "react-toolbox": "^2.0.0-beta.12"
   }
 }
