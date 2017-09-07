@@ -56,12 +56,14 @@ class App extends React.Component {
   }
 
   setNewPhrase(length, chars) {
+    console.log('inside set new phrase');
     var mask = '';
     if (chars.indexOf('a') > -1) mask += 'abcdefghijklmnopqrstuvwxyz';
     if (chars.indexOf('A') > -1) mask += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
     if (chars.indexOf('#') > -1) mask += '0123456789';
     var result = '';
     for (var i = length; i > 0; --i) result += mask[Math.floor(Math.random() * mask.length)];
+    console.log(result);
     return result;
   }
 
@@ -125,9 +127,7 @@ class App extends React.Component {
         <Button label='Decrypt!' onClick={() => this.handleToggle('decryptActive')}/>
       </section>
 
-      <Passphrase passphrase={this.state.passphrase}/> 
-      {/*<p>Your PassPhrase: {this.state.passphrase} </p>*/}
-      {/*<Button label='Generate a new PassPhrase' onClick={this.setNewPhrase.bind(this, 5, 'aA#')}/>*/}
+      <Passphrase passphrase={this.state.passphrase} setNewPhrase={this.setNewPhrase} handleChange={this.handleChange}/> 
 
       <Dialog
         actions={this.encryptActions}
@@ -148,7 +148,7 @@ class App extends React.Component {
       >
         <Input type='text' multiline label='Message' maxLength={200} value={this.state.decoded}/>
         <Button label='Decrypt' onClick={this.decrypt}/>
-    </Dialog>
+      </Dialog>
 
     </div>)
   }
