@@ -4,7 +4,8 @@ import { Button} from '../../node_modules/react-toolbox/lib/button';
 import { Input } from '../../node_modules/react-toolbox/lib/input';
 import { DatePicker } from 'react-toolbox/lib/date_picker';
 import { Dialog } from 'react-toolbox/lib/dialog';
-// import EncryptPopup from 'components/EncryptPopup';
+// import EncryptPopup from './components/EncryptPopup';
+import Passphrase from './components/Passphrase.jsx';
 
 import $ from 'jquery';
 
@@ -27,14 +28,21 @@ class App extends React.Component {
       { label: "Decrypt", onClick: this.handleToggle.bind(this, 'encryptActive') }
     ];
 
+    this.decryptActions = [
+      { label: "Decrypt", onClick: this.handleToggle.bind(this, 'decryptActive') }
+    ];
+
     this.handleChange = this.handleChange.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
     this.setNewPhrase = this.setNewPhrase.bind(this);
     this.encrypt = this.encrypt.bind(this);
+    this.decrypt = this.decrypt.bind(this);
   }
 
-  componentDidMount() {
-    this.setNewPhrase(5, 'aA#');
+  componentWillMount() {
+    // this.setNewPhrase(5, 'aA#');
+    let newPhrase = this.setNewPhrase(5, 'aA#');
+    this.setState({passphrase: newPhrase});
   }
 
   handleChange(name, value){
@@ -54,7 +62,7 @@ class App extends React.Component {
     if (chars.indexOf('#') > -1) mask += '0123456789';
     var result = '';
     for (var i = length; i > 0; --i) result += mask[Math.floor(Math.random() * mask.length)];
-    this.setState({passphrase: result});
+    return result;
   }
 
   encrypt(event) {
@@ -69,28 +77,32 @@ class App extends React.Component {
         passphrase: this.state.passphrase,
       },
       success: (data) => {
-        console.log('success! data: ', data);
+        console.log('successfully encrypted! data: ', data);
         this.setState({encoded: data});
         this.handleToggle('encryptActive');
-        // <EncryptPopup>
       },
       error: (err) => {
-        console.log('ERRORED:', err);
+        console.log('ERROR FROM ECRYPT:', err);
       }
     })
   }
 
   decrypt(event) {
     event.preventDefault();
-    <Dialog
-      actions={this.actions}
-      active={this.state.decryptActive}
-      onEscKeyDown={this.handleToggle.bind(this, 'decryptActive')}
-      onOverlayClick={this.handleToggle.bind(this, 'decryptActive')}
-      title='Decrypt'
-    >
-      <Input type='text' multiline label='Message' maxLength={200} value={this.state.dencoded} />
-    </Dialog>
+    $.ajax({
+      url: 'decrypt',
+      type: 'GET',
+      data: {
+        decoded: this.state.decoded,
+        passphrase: this.state.passphrase,
+      },
+      success: (data) => {
+        console.log('successfully dencrypted!!', data);
+      },
+      error: (err) => {
+        console.log('ERROR FROM DECRYPT:', err)
+      }
+    })
   }
 
   render () {
@@ -98,7 +110,7 @@ class App extends React.Component {
     <div>
       <h1>Tovia's Enigma</h1>
       
-      <section> 
+      <section>
         <Input type='text' label='Name' name='name' value={this.state.name} onChange={this.handleChange.bind(this, 'name')} maxLength={16} />
         <Input type='text' label='Message' name={'message'} value={this.state.message} onChange={this.handleChange.bind(this, 'message')} maxLength={ 120 }></Input>
 
@@ -110,11 +122,12 @@ class App extends React.Component {
           sundayFirstDayOfWeek
         />
         <Button label='Encrypt!' onClick={this.encrypt}/>
-        <Button label='Decrypt!' onClick={this.decrypt}/>
+        <Button label='Decrypt!' onClick={() => this.handleToggle('decryptActive')}/>
       </section>
-      
-      <p>Your PassPhrase: {this.state.passphrase} </p>
-      <Button label='Generate a new PassPhrase' onClick={this.setNewPhrase.bind(this, 5, 'aA#')}/>
+
+      <Passphrase passphrase={this.state.passphrase}/> 
+      {/*<p>Your PassPhrase: {this.state.passphrase} </p>*/}
+      {/*<Button label='Generate a new PassPhrase' onClick={this.setNewPhrase.bind(this, 5, 'aA#')}/>*/}
 
       <Dialog
         actions={this.encryptActions}
@@ -125,6 +138,17 @@ class App extends React.Component {
       >
         <Input type='text' multiline label='Message' maxLength={200} value={this.state.encoded} />
       </Dialog>
+
+      <Dialog
+        actions={this.decryptActions}
+        active={this.state.decryptActive}
+        onEscKeyDown={() => this.handleToggle.bind(this, 'decryptActive')}
+        onOverlayClick={() => this.handleToggle.bind(this, 'decryptActive')}
+        title='Decrypt'
+      >
+        <Input type='text' multiline label='Message' maxLength={200} value={this.state.decoded}/>
+        <Button label='Decrypt' onClick={this.decrypt}/>
+    </Dialog>
 
     </div>)
   }
