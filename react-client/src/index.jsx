@@ -17,12 +17,14 @@ class App extends React.Component {
       expireDate: '',
       passphrase: '',
       encoded: '',
-      active: false,
+      decoded: '',
+      encryptActive: false,
+      decryptActive: false,
     }
 
-    this.actions = [
-      { label: "Close", onClick: this.handleToggle.bind(this) },
-      { label: "Decrypt", onClick: this.handleToggle.bind(this) }
+    this.encryptActions = [
+      { label: "Close", onClick: this.handleToggle.bind(this, 'encryptActive') },
+      { label: "Decrypt", onClick: this.handleToggle.bind(this, 'encryptActive') }
     ];
 
     this.handleChange = this.handleChange.bind(this);
@@ -40,8 +42,9 @@ class App extends React.Component {
     this.setState({ [name]: value });
   };
 
-  handleToggle(){
-    this.setState({active: !this.state.active});
+  handleToggle(name){
+    // console.log('name', name)
+    this.setState({[name] : !this.state[name]});
   }
 
   setNewPhrase(length, chars) {
@@ -68,13 +71,26 @@ class App extends React.Component {
       success: (data) => {
         console.log('success! data: ', data);
         this.setState({encoded: data});
-        this.handleToggle();
+        this.handleToggle('encryptActive');
         // <EncryptPopup>
       },
       error: (err) => {
         console.log('ERRORED:', err);
       }
     })
+  }
+
+  decrypt(event) {
+    event.preventDefault();
+    <Dialog
+      actions={this.actions}
+      active={this.state.decryptActive}
+      onEscKeyDown={this.handleToggle.bind(this, 'decryptActive')}
+      onOverlayClick={this.handleToggle.bind(this, 'decryptActive')}
+      title='Decrypt'
+    >
+      <Input type='text' multiline label='Message' maxLength={200} value={this.state.dencoded} />
+    </Dialog>
   }
 
   render () {
@@ -94,17 +110,17 @@ class App extends React.Component {
           sundayFirstDayOfWeek
         />
         <Button label='Encrypt!' onClick={this.encrypt}/>
-        <Button label='Decrypt!'/>
+        <Button label='Decrypt!' onClick={this.decrypt}/>
       </section>
       
       <p>Your PassPhrase: {this.state.passphrase} </p>
       <Button label='Generate a new PassPhrase' onClick={this.setNewPhrase.bind(this, 5, 'aA#')}/>
 
       <Dialog
-        actions={this.actions}
-        active={this.state.active}
-        onEscKeyDown={this.handleToggle}
-        onOverlayClick={this.handleToggle}
+        actions={this.encryptActions}
+        active={this.state.encryptActive}
+        onEscKeyDown={() => this.handleToggle('encryptActive')}
+        onOverlayClick={() => this.handleToggle('encryptActive')}
         title='Encrypt/Decrypt'
       >
         <Input type='text' multiline label='Message' maxLength={200} value={this.state.encoded} />
