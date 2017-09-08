@@ -25,7 +25,6 @@ class App extends React.Component {
 
     this.encryptActions = [
       { label: "Close", onClick: this.handleToggle.bind(this, 'encryptActive') },
-      { label: "Decrypt", onClick: this.handleToggle.bind(this, 'encryptActive') }
     ];
 
     this.decryptActions = [
@@ -99,7 +98,7 @@ class App extends React.Component {
       },
       success: (data) => {
         console.log('successfully decrypted!!', data);
-        this.setState({message: data });
+        this.setState({message: data, decoded: '', encoded: ''});
         this.handleToggle('decryptActive');
 
       },

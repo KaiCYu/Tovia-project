@@ -32,9 +32,8 @@ app.post('/encrypt', (req, res) => {
 
 app.get('/decrypt', (req, res) => {
   console.log('INSIDE DECRYPT');
-  // console.log(req.query);
   console.log('cache', cache);
-  console.log('decoded ',req.query.decoded, 'passphrase ', req.query.passphrase);
+  // console.log('decoded ',req.query.decoded, 'passphrase ', req.query.passphrase);
   //access the cache, return the message
   let decoded = req.query.decoded;
   let passphrase = req.query.passphrase;
