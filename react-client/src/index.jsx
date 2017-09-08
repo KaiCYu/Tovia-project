@@ -98,12 +98,11 @@ class App extends React.Component {
         currentTime: Date.now(),
       },
       success: (data) => {
-        console.log('successfully decrypted!!', data);
-        this.setState({message: data, decoded: '', encoded: ''});
+        this.setState({message: data.message, expireDate: new Date(data.expireDate), name: data.name, decoded: '', encoded: ''});
         this.handleToggle('decryptActive');
-
       },
       error: (err) => {
+        alert('Message has expired or was not able to be decrypted...')
         console.log('ERROR FROM DECRYPT:', err.responseText)
       }
     })
