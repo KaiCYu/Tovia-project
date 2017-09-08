@@ -4,9 +4,7 @@ import { Button} from '../../node_modules/react-toolbox/lib/button';
 import { Input } from '../../node_modules/react-toolbox/lib/input';
 import { DatePicker } from 'react-toolbox/lib/date_picker';
 import { Dialog } from 'react-toolbox/lib/dialog';
-// import EncryptPopup from './components/EncryptPopup';
 import Passphrase from './components/Passphrase.jsx';
-
 import $ from 'jquery';
 
 class App extends React.Component {
@@ -44,12 +42,10 @@ class App extends React.Component {
   }
 
   handleChange(name, value){
-    // console.log('name', name, 'value', value);
     this.setState({ [name]: value });
   };
 
   handleToggle(name){
-    // console.log('name', name)
     this.setState({[name] : !this.state[name]});
   }
 
@@ -60,7 +56,6 @@ class App extends React.Component {
     if (chars.indexOf('#') > -1) mask += '0123456789';
     var result = '';
     for (var i = length; i > 0; --i) result += mask[Math.floor(Math.random() * mask.length)];
-    // console.log(result);
     return result;
   }
 
@@ -76,7 +71,6 @@ class App extends React.Component {
         passphrase: this.state.passphrase,
       },
       success: (data) => {
-        console.log('successfully encrypted! data: ', data);
         this.setState({encoded: data, message: '', name: '', expireDate: ''});
         this.handleToggle('encryptActive');
       },
@@ -112,14 +106,13 @@ class App extends React.Component {
     return (
     <div>
       <h1>Tovia's Enigma</h1>
-      
       <section>
         <Input type='text' label='Name' name='name' value={this.state.name} onChange={this.handleChange.bind(this, 'name')} maxLength={16} />
         <Input type='text' label='Message' name={'message'} value={this.state.message} onChange={this.handleChange.bind(this, 'message')} maxLength={ 120 }></Input>
 
         <DatePicker
           label='Expiration date'
-          minDate={new Date(2017, 7, 1)}
+          minDate={new Date()}
           onChange={this.handleChange.bind(this, 'expireDate')}
           value={this.state.expireDate}
           sundayFirstDayOfWeek
