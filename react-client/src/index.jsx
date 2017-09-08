@@ -95,6 +95,7 @@ class App extends React.Component {
       data: {
         decoded: this.state.decoded,
         passphrase: this.state.passphrase,
+        currentTime: Date.now(),
       },
       success: (data) => {
         console.log('successfully decrypted!!', data);
@@ -119,7 +120,7 @@ class App extends React.Component {
 
         <DatePicker
           label='Expiration date'
-          minDate={new Date(2017, 8, 15)}
+          minDate={new Date(2017, 7, 1)}
           onChange={this.handleChange.bind(this, 'expireDate')}
           value={this.state.expireDate}
           sundayFirstDayOfWeek

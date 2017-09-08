@@ -14,14 +14,21 @@ app.listen(4321, function() {
 
 
 app.post('/encrypt', (req, res) => {
+  console.log('INSIDE ENCRYPT');
   console.log('req.body', req.body);
   let encoded = randomText(200, 'aA#');
+  let passphrase = req.body.passphrase
 
-  if (!cache[req.body.passphrase]) {
-    cache[req.body.passphrase] = {
+  let exp = req.body.expireDate;
+  console.log(exp);
+  console.log( Date.parse(exp));
+
+
+  if (!cache[passphrase]) {
+    cache[passphrase] = {
       expireDate: req.body.expireDate,
     }
-    cache[req.body.passphrase][encoded] = req.body.message;
+    cache[passphrase][encoded] = req.body.message;
   } else {
     console.log('ERROR: THE MESSAGE IS ALREADY CACHED');
   }
@@ -37,11 +44,16 @@ app.get('/decrypt', (req, res) => {
   //access the cache, return the message
   let decoded = req.query.decoded;
   let passphrase = req.query.passphrase;
+  let currentTime = req.query.currentTime;
+  let expireDate = Date.parse(cache[passphrase].expireDate);
 
-  if (cache[passphrase] && cache[passphrase][decoded]) {
+  console.log('currentTime', currentTime);
+  console.log('cached time', Date.parse(cache[passphrase].expireDate));
+
+  if (cache[passphrase] && cache[passphrase][decoded] && expireDate > currentTime) {
     res.send(cache[passphrase][decoded]);
   } else {
-    res.status(500).send('Message could not be decrypted!')
+    res.status(500).send('Message could not be decrypted or has expired!')
   }
 })
 
