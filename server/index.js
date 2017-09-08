@@ -32,6 +32,18 @@ app.post('/encrypt', (req, res) => {
 
 app.get('/decrypt', (req, res) => {
   console.log('INSIDE DECRYPT');
+  // console.log(req.query);
+  console.log('cache', cache);
+  console.log('decoded ',req.query.decoded, 'passphrase ', req.query.passphrase);
+  //access the cache, return the message
+  let decoded = req.query.decoded;
+  let passphrase = req.query.passphrase;
+
+  if (cache[passphrase] && cache[passphrase][decoded]) {
+    res.send(cache[passphrase][decoded]);
+  } else {
+    res.status(500).send('Message could not be decrypted!')
+  }
 })
 
 
