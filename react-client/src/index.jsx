@@ -98,9 +98,9 @@ class App extends React.Component {
         passphrase: this.state.passphrase,
       },
       success: (data) => {
-        console.log('successfully dencrypted!!', data);
-        this.setState({message: data});
-        this.handleToggle('dencryptActive');
+        console.log('successfully decrypted!!', data);
+        this.setState({message: data });
+        this.handleToggle('decryptActive');
 
       },
       error: (err) => {
@@ -145,8 +145,8 @@ class App extends React.Component {
         title='Decrypt'
         actions={this.decryptActions}
         active={this.state.decryptActive}
-        onEscKeyDown={() => this.handleToggle.bind(this, 'decryptActive')}
-        onOverlayClick={() => this.handleToggle.bind(this, 'decryptActive')}
+        onEscKeyDown={() => this.handleToggle('decryptActive')}
+        onOverlayClick={() => this.handleToggle('decryptActive')}
       >
         <Input type='text' multiline label='Message' maxLength={200} value={this.state.decoded} onChange={this.handleChange.bind(this, 'decoded')}/>
         <Button label='Decrypt' onClick={this.decrypt}/>
