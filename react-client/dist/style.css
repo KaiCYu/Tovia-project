@@ -1,0 +1,12 @@
+.section {
+  margin: auto;
+  height: 50%;
+  width: 25%;
+  border: 1px solid grey;
+  padding: 15px;
+
+}
+
+.passphrase {
+  text-align: center;
+}

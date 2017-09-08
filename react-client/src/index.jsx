@@ -105,9 +105,9 @@ class App extends React.Component {
   render () {
     return (
     <div>
-      <h1>Tovia's Enigma</h1>
-      <section>
-        <Input type='text' label='Name' name='name' value={this.state.name} onChange={this.handleChange.bind(this, 'name')} maxLength={16} />
+      <section className="section">
+        <h2>Tovia's Enigma</h2>
+        <Input type='text' label='Name' name='name' value={this.state.name} onChange={this.handleChange.bind(this, 'name')} />
         <Input type='text' label='Message' name={'message'} value={this.state.message} onChange={this.handleChange.bind(this, 'message')} maxLength={ 120 }></Input>
 
         <DatePicker
@@ -117,8 +117,8 @@ class App extends React.Component {
           value={this.state.expireDate}
           sundayFirstDayOfWeek
         />
-        <Button label='Encrypt!' onClick={this.encrypt}/>
-        <Button label='Decrypt!' onClick={() => this.handleToggle('decryptActive')}/>
+        <Button label='Encrypt' onClick={this.encrypt}/>
+        <Button label='Decrypt' onClick={() => this.handleToggle('decryptActive')}/>
       </section>
 
       <Passphrase passphrase={this.state.passphrase} setNewPhrase={this.setNewPhrase} handleChange={this.handleChange}/> 

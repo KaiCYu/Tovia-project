@@ -1,3 +1,29 @@
+# Tovia's Enigma
+
+
+### Installation
+```
+ npm install
+```
+
+### Getting started
+```
+ npm start
+```
+
+open in browser
+```
+localhost://4321
+```
+
+### Key notes
+
+* You must select a future date (NOT the current date) in order to later decrypt the message properly
+* Refreshing the page will cause a new passphrase to be created
+
+
+### About
+
 Tovia’s Enigma, is a web application that lets users create an encrypted message given a random
 passphrase (they can always generate a new passphrase to keep their privacy) that they have to share
 between each other.
@@ -34,3 +60,13 @@ Bonus points:
 ● Create your app by using Webpack (preferably v2)
 ● Create a production build script
 ● Use the latest JS features assisting with Babel
+
+
+### TODO:
+
+* hash the message and use passphrase as a salt (currently creating a random string as key
+* refactor dialog boxes
+* add profile icon next to Name input
+* add copy to clipboard when clicking on passphrase
+* add react hot reload to dev environment
+
